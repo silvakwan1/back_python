@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Promotions API</title>
+  </head>
+  <body>
+    <h1>Test Promotions API</h1>
+    <form id="promotionForm" enctype="multipart/form-data">
+      <label for="date_start">Start Date:</label>
+      <input
+        type="date"
+        id="date_start"
+        name="date_start"
+        required
+      /><br /><br />
+
+      <label for="date_end">End Date:</label>
+      <input type="date" id="date_end" name="date_end" required /><br /><br />
+
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required /><br /><br />
+
+      <label for="link">Link:</label>
+      <input type="url" id="link" name="link" /><br /><br />
+
+      <label for="cupom">Cupom:</label>
+      <input type="text" id="cupom" name="cupom" /><br /><br />
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description"></textarea><br /><br />
+
+      <label for="categoria">Category:</label>
+      <input type="text" id="categoria" name="categoria" required /><br /><br />
+
+      <label for="latitude">Latitude:</label>
+      <input
+        type="number"
+        step="any"
+        id="latitude"
+        name="latitude"
+        required
+      /><br /><br />
+
+      <label for="longitude">Longitude:</label>
+      <input
+        type="number"
+        step="any"
+        id="longitude"
+        name="longitude"
+        required
+      /><br /><br />
+
+      <label for="image">Image:</label>
+      <input type="file" id="image" name="image" required /><br /><br />
+
+      <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+      async function submitForm() {
+        const form = document.getElementById("promotionForm");
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch(
+            "http://localhost:8000/create/promotion",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+
+          const result = await response.json();
+
+          if (response.ok) {
+            alert(
+              "Promotion created successfully!\n" +
+                JSON.stringify(result, null, 2)
+            );
+          } else {
+            alert("Error: " + result.detail);
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+          alert("An unexpected error occurred.");
+        }
+      }
+    </script>
+  </body>
+</html>

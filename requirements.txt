@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+motor
+pydantic
+mysql-connector-python
+python-multipart
+uuid
