@@ -1,18 +1,23 @@
 from fastapi import APIRouter, HTTPException
-from app.database import cursor  # Supondo que você tenha o cursor configurado no database.py
+from app.database import cursor  
+import os
+from datetime import datetime,date
+from app.func.delete import deletar_promocoes_expiradas
 
 router = APIRouter()
 
 @router.get('/promotions')
 async def get_all_promotions():
     try:
-        # Executar a consulta para obter todas as promoções
+
+        deletar_promocoes_expiradas()
+
         cursor.execute("SELECT * FROM Promocoes")
         promotions = cursor.fetchall()
 
-        # Estruturar o resultado em uma lista de dicionários
         all_promotions = []
         for promotion in promotions:
+
             all_promotions.append({
                 "id": promotion[0],
                 "dateStart": promotion[1],
@@ -28,7 +33,7 @@ async def get_all_promotions():
                 "createdAt": promotion[11]
             })
 
-        return {"promotions": all_promotions}
+        return  all_promotions
 
     except Exception as e:
         print("Erro ao buscar promoções:", e)

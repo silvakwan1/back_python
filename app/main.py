@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles  # Correção: Importar StaticFiles corretamente
-from app.routes import create_promotion,viw_promotion
+from app.routes import create_promotion,viw_promotion_location, viw_promotion
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -19,6 +19,7 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")  # Corre
 
 # Incluir o roteador de promoções
 app.include_router(create_promotion.router)
+app.include_router(viw_promotion_location.router)
 app.include_router(viw_promotion.router)
 
 # Rota raiz

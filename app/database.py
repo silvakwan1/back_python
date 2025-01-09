@@ -1,6 +1,5 @@
 import mysql.connector
 
-# Conexão com o banco de dados
 conn = mysql.connector.connect(
     host="localhost",  # Endereço do servidor MySQL
     user="root",  # Usuário do MySQL
