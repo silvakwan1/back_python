@@ -1,8 +1,11 @@
 #teste
+./criar.html
 criar.html
+./index.html
 index.html
 
 #pasta com imagens
 app/uploads/
+app/uploads/*
 uploads/
 uploads/*
