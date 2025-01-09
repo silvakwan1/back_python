@@ -9,3 +9,8 @@ app/uploads/
 app/uploads/*
 uploads/
 uploads/*
+
+#pasta de cache
+__pycache__/
+*/__pycache__/*
+app/__pycache__
