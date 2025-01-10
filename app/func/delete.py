@@ -17,14 +17,26 @@ def deletar_promocoes_expiradas():
             promo_id, date_end, image_path = promocao
             
             if image_path:
-                full_path = os.path.join(UPLOAD_FOLDER, image_path)
+                full_path = os.path.normpath(image_path)
+    
+                if not os.path.isabs(full_path):
+                    full_path = os.path.join(os.getcwd(), full_path)
+    
+                print(f"Caminho final da imagem: {full_path}")
+    
                 if os.path.exists(full_path):
                     try:
-                        os.remove(full_path)
+                        os.remove(full_path)  
                         print(f"Imagem {full_path} da promoção {promo_id} deletada com sucesso.")
                     except OSError as e:
                         print(f"Erro ao deletar imagem {full_path}: {e}")
-            
+                        raise HTTPException(
+                            status_code=500,
+                            detail=f"Erro ao deletar imagem: {str(e)}"
+                        )
+                else:
+                    print(f"O arquivo {full_path} não existe.")
+
             cursor.execute("DELETE FROM Promocoes WHERE id = %s", (promo_id,))
             print(f"Promoção com id {promo_id} deletada porque passou da data de término.")
 
